@@ -1,0 +1,63 @@
+version: '3'
+
+services:
+    test-maxline-nginx:
+      image: nginx:latest
+      restart: always
+      container_name: test-maxline-nginx
+      ports:
+        - "8080:80"
+        - "4431:443"
+      volumes:
+        - ../:/var/www/html/:delegated
+        - ./ssl/:/etc/ssl/
+        - ./nginx/conf.d:/etc/nginx/conf.d
+      links:
+        - test-maxline-php7.2-fpm
+
+    test-maxline-php7.2-fpm:
+      build: ./php-fpm/7.2.7/
+      container_name: test-maxline-php7.2-fpm
+      restart: always
+      volumes:
+        - ../:/var/www/html/:delegated
+        - ./php-fpm/php-fpm.d/php.conf:/usr/local/etc/php-fpm.d/php.conf
+      links:
+        - test-maxline-db
+        - test-maxline-redis
+
+    test-maxline-db:
+      image: mariadb:10.2
+      restart: always
+      container_name: test-maxline-db
+      environment:
+        MYSQL_ROOT_PASSWORD: 123456
+        MYSQL_USER: root
+        MYSQL_PASSWORD: 123456
+      volumes:
+        - ./databases:/var/lib/mysql
+
+    test-maxline-phpmyadmin:
+      image: phpmyadmin/phpmyadmin
+      restart: always
+      container_name: test-maxline-phpmyadmin
+      ports:
+        - "8888:80"
+      environment:
+        PMA_VERBOSE: test-maxline-db
+        PMA_HOST: test-maxline-db
+        MYSQL_ROOT_PASSWORD: 123456
+        MYSQL_USER: root
+        MYSQL_PASSWORD: 123456
+      links:
+        - test-maxline-db
+
+    test-maxline-redis:
+      image: redis
+      command: ["redis-server", "--appendonly", "yes"]
+      restart: always
+      container_name: test-maxline-redis
+      ports:
+        - "6379:6379"
+      volumes:
+        - ./redis/data:/data
