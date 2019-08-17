@@ -10,6 +10,9 @@ use Phalcon\Mvc\Url as UrlProvider;
 define('BASE_PATH', dirname(__DIR__));
 define('APP_PATH', BASE_PATH . '/app');
 
+//connect libraries
+require_once BASE_PATH . '/vendor/autoload.php';
+
 // Register an autoloader
 $loader = new Loader();
 
@@ -17,6 +20,13 @@ $loader->registerDirs(
     [
         APP_PATH . '/controllers/',
         APP_PATH . '/models/',
+        APP_PATH . '/helpers/',
+    ]
+);
+
+$loader->registerNamespaces(
+    [
+        'TestMaxLine\Helpers'    => APP_PATH . '/helpers/',
     ]
 );
 

@@ -1,6 +1,6 @@
 <?php
 
-//namespace TestMaxLine\Helpers;
+namespace TestMaxLine\Helpers;
 
 use Cmfcmf\OpenWeatherMap;
 use Cmfcmf\OpenWeatherMap\Exception as OWMException;
