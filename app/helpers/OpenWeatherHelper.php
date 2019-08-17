@@ -44,10 +44,7 @@ class OpenWeatherHelper
             echo 'General exception: ' . $e->getMessage() . ' (Code ' . $e->getCode() . ').';
         }
 
-        /*return (array)$weather;*/
-
         return static::objectToArray($weather);
-
     }
 
     /**
@@ -61,7 +58,11 @@ class OpenWeatherHelper
         $result = [];
         foreach ($object as $key => $item) {
             if (is_object($item)) {
-                $result[$key] = static::objectToArray($item);
+                if ($item instanceof Cmfcmf\OpenWeatherMap\Util\Unit) {
+                    $result[$key] = $item->getFormatted();
+                } else {
+                    $result[$key] = static::objectToArray($item);
+                }
             } else {
                 $result[$key] = $item;
             }
