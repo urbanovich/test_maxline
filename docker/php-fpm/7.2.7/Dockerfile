@@ -59,3 +59,10 @@ RUN pecl install xdebug \
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
     && ln -s $(composer config --global home) /root/composer
 ENV PATH=$PATH:/root/composer/vendor/bin COMPOSER_ALLOW_SUPERUSER=1
+
+# Install Phalcon DevTools
+RUN cd ~ \
+    && git clone git://github.com/phalcon/phalcon-devtools.git \
+    && cd phalcon-devtools \
+    && ./phalcon.sh \
+    && ln -s $(pwd)/phalcon /usr/bin/phalcon
