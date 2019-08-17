@@ -21,12 +21,14 @@ $loader->registerDirs(
         APP_PATH . '/controllers/',
         APP_PATH . '/models/',
         APP_PATH . '/helpers/',
+        APP_PATH . '/forms/',
     ]
 );
 
 $loader->registerNamespaces(
     [
         'TestMaxLine\Helpers'    => APP_PATH . '/helpers/',
+        'TestMaxLine\Forms'    => APP_PATH . '/forms/',
     ]
 );
 

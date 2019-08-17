@@ -2,6 +2,7 @@
 
 use Phalcon\Mvc\Controller;
 use TestMaxLine\Helpers\OpenWeatherHelper;
+use TestMaxLine\Forms\SearchWeatherForm;
 
 class WeatherController extends Controller
 {
@@ -12,10 +13,23 @@ class WeatherController extends Controller
 
     public function indexAction()
     {
-        /*$weather = OpenWeatherHelper::getWeather('Minsk');
+        $form = new SearchWeatherForm();
 
-        echo '<pre>';
-        print_r($weather);
-        echo '</pre>';*/
+        $this->view->form = $form;
+    }
+
+    public function searchAction()
+    {
+        $form = new SearchWeatherForm();
+        if ($this->request->isPost()) {
+            if ($form->isValid($this->request->getPost())) {
+                $name = $this->request->getPost('name');
+                $weather = OpenWeatherHelper::getWeather($name);
+
+                $this->view->result = $weather;
+            } else {
+                $this->view->messages = $form->getMessages();
+            }
+        }
     }
 }

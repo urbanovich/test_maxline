@@ -37,7 +37,7 @@ class OpenWeatherHelper
         $owm = new OpenWeatherMap(static::API_KEY, $httpClient, $httpRequestFactory);
 
         try {
-            $weather = $owm->getWeather($data, $units, $lang);
+            $weather = $owm->getWeather(static::convertCoordinate($data), $units, $lang);
         } catch (OWMException $e) {
             echo 'OpenWeatherMap exception: ' . $e->getMessage() . ' (Code ' . $e->getCode() . ').';
         } catch (\Exception $e) {
@@ -69,5 +69,21 @@ class OpenWeatherHelper
         }
 
         return $result;
+    }
+
+    protected static function convertCoordinate($coordinate)
+    {
+        if (strpos($coordinate, ',') !== false) {
+            $coordinate = explode(',', $coordinate);
+            $coordinate = array_map('trim', $coordinate);
+            $result = [
+                'lat' => $coordinate[0],
+                'lon' => $coordinate[1],
+            ];
+
+            return $result;
+        }
+
+        return $coordinate;
     }
 }

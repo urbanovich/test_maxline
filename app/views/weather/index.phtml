@@ -1,0 +1,23 @@
+<?php
+    $form = $this->view->form;
+?>
+<h1>
+    Weather by city or coordinates
+</h1>
+
+<form method='post' action="/weather/search">
+
+    <p>
+        <label>
+            Set city name or coordinates separated by comma
+        </label>
+
+        <?php echo $form->render('name'); ?>
+        <p>For example: "53.9, 27.56" or "Minsk"
+    </p>
+
+    <p>
+        <input type='submit' value='Save' />
+    </p>
+
+</form>
