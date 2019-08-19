@@ -2,6 +2,7 @@
 
 use TestMaxLine\Helpers\OpenWeatherHelper;
 use TestMaxLine\Forms\SearchWeatherForm;
+use TestMaxLine\Models\CityHistory;
 
 class WeatherController extends ControllerBase
 {
@@ -23,6 +24,8 @@ class WeatherController extends ControllerBase
         if ($this->request->isPost()) {
             if ($form->isValid($this->request->getPost())) {
                 $name = $this->request->getPost('name');
+
+                CityHistory::saveInHistory($name);
                 $weather = OpenWeatherHelper::getWeather($name);
 
                 $this->view->result = $weather;

@@ -1,5 +1,7 @@
 <?php
 
+namespace TestMaxLine\Models;
+
 class CityHistory extends \Phalcon\Mvc\Model
 {
 
@@ -56,4 +58,12 @@ class CityHistory extends \Phalcon\Mvc\Model
         return parent::findFirst($parameters);
     }
 
+    public static function saveInHistory($name)
+    {
+        if (!static::find(['name' => $name])) {
+            $city = new self();
+            $city->name = $name;
+            return $city->save();
+        }
+    }
 }
