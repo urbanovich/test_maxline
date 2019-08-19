@@ -1,0 +1,9 @@
+<?php
+$history = $this->view->history;
+?>
+<h1>Cities:</h1>
+<ul>
+    <?php foreach ($history as $city): ?>
+        <li><?php echo $city->name;?></li>
+    <?php endforeach; ?>
+</ul>

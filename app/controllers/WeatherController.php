@@ -34,4 +34,9 @@ class WeatherController extends ControllerBase
             }
         }
     }
+
+    public function cityHistoryAction()
+    {
+        $this->view->history = CityHistory::find(['order' => 'name']);
+    }
 }
