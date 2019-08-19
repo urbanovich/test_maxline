@@ -1,6 +1,7 @@
 <?php
 
 use TestMaxLine\Helpers\OpenWeatherHelper;
+use TestMaxLine\Helpers\RedisHelper;
 use TestMaxLine\Forms\SearchWeatherForm;
 use TestMaxLine\Models\CityHistory;
 
@@ -26,6 +27,7 @@ class WeatherController extends ControllerBase
                 $name = $this->request->getPost('name');
 
                 CityHistory::saveInHistory($name);
+                RedisHelper::setCityHistory($name);
                 $weather = OpenWeatherHelper::getWeather($name);
 
                 $this->view->result = $weather;
