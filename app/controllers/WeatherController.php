@@ -1,10 +1,9 @@
 <?php
 
-use Phalcon\Mvc\Controller;
 use TestMaxLine\Helpers\OpenWeatherHelper;
 use TestMaxLine\Forms\SearchWeatherForm;
 
-class WeatherController extends Controller
+class WeatherController extends ControllerBase
 {
     public function initialize()
     {
