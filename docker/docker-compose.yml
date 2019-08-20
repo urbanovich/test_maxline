@@ -24,7 +24,7 @@ services:
         - ./php-fpm/php-fpm.d/php.conf:/usr/local/etc/php-fpm.d/php.conf
       links:
         - test-maxline-db
-        - test-maxline-redis
+        - test-maxline-redisearch
 
     test-maxline-db:
       image: mariadb:10.2
@@ -52,12 +52,9 @@ services:
       links:
         - test-maxline-db
 
-    test-maxline-redis:
-      image: redis
-      command: ["redis-server", "--appendonly", "yes"]
+    test-maxline-redisearch:
+      image: redislabs/redisearch:latest
       restart: always
-      container_name: test-maxline-redis
-      ports:
-        - "6379:6379"
+      container_name: test-maxline-redisearch
       volumes:
         - ./redis/data:/data
