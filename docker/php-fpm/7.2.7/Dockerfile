@@ -66,3 +66,9 @@ RUN cd ~ \
     && cd phalcon-devtools \
     && ./phalcon.sh \
     && ln -s $(pwd)/phalcon /usr/bin/phalcon
+
+RUN apt-get update \
+    && apt-get install -y curl lsb-release gnupg \
+    && curl -sL https://deb.nodesource.com/setup_10.x | bash - \
+    && apt-get update \
+    && apt-get install -y nodejs
