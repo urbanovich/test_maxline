@@ -60,10 +60,14 @@ class CityHistory extends \Phalcon\Mvc\Model
 
     public static function saveInHistory($name)
     {
-        if (!static::find(['name' => $name])) {
+        if (!static::findFirst('name = "' . addslashes($name) . '"')) {
             $city = new self();
             $city->name = $name;
-            return $city->save();
+            if ($city->save() !== false) {
+                return $city->id;
+            } else {
+                return false;
+            }
         }
     }
 }
