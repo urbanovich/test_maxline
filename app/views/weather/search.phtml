@@ -2,6 +2,7 @@
 $result = $this->view->result;
 $messages = $this->view->messages;
 ?>
+<a href="/weather/cityhistory">City history</a>
 <?php if (!empty($messages)): ?>
     <?php foreach ($messages as $message): ?>
         <?php echo $message . '</br>' ?>

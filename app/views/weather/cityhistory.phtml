@@ -1,9 +1,10 @@
 <?php
-$history = $this->view->history;
+$dbHistory = $this->view->dbHistory;
 ?>
-<h1>Cities:</h1>
+<h1>City history:</h1>
 <ul>
-    <?php foreach ($history as $city): ?>
+    <?php foreach ($dbHistory as $city): ?>
         <li><?php echo $city->name;?></li>
     <?php endforeach; ?>
 </ul>
+<a href="/weather">App Weather</a>

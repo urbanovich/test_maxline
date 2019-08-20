@@ -17,6 +17,8 @@ class WeatherController extends ControllerBase
         $form = new SearchWeatherForm();
 
         $this->view->form = $form;
+
+        RedisHelper::getInstance()->getCityHistoryIndex()->drop();
     }
 
     public function searchAction()
@@ -26,8 +28,10 @@ class WeatherController extends ControllerBase
             if ($form->isValid($this->request->getPost())) {
                 $name = $this->request->getPost('name');
 
-                CityHistory::saveInHistory($name);
-                RedisHelper::setCityHistory($name);
+                if ($id = CityHistory::saveInHistory($name)) {
+                    RedisHelper::setCityHistory($id, $name);
+                }
+
                 $weather = OpenWeatherHelper::getWeather($name);
 
                 $this->view->result = $weather;
@@ -35,10 +39,12 @@ class WeatherController extends ControllerBase
                 $this->view->messages = $form->getMessages();
             }
         }
+
+
     }
 
     public function cityHistoryAction()
     {
-        $this->view->history = CityHistory::find(['order' => 'name']);
+        $this->view->dbHistory = CityHistory::find(['order' => 'name']);
     }
 }
